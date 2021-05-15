@@ -21,10 +21,14 @@ class UserAccountManager(BaseUserManager):
 
 class UserAccount(AbstractBaseUser, PermissionsMixin):
     email = models.EmailField(max_length=255, unique=True)
-    user = models.CharField(max_length=255)
-    is_active = (models.BooleanField(default=False),)
-    is_stuff = models.BooleanField(default=False)
+    first_name = models.CharField(max_length=255)
+    last_name = models.CharField(max_length=255)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
 
     objects = UserAccountManager()
 
     USERNAME_FIELD = "email"
+
+    def __str__(self):
+        return self.email
