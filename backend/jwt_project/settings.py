@@ -27,6 +27,7 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    "accounts",
     "rest_framework",
     "djoser",
 ]
@@ -137,3 +138,5 @@ DJOSER = {
     "ACTIVATION_URL": "activate/{uid}/{token}",
     "SEND_ACTIVATION_EMAIL": True,
 }
+
+AUTH_USER_MODEL = "accounts.UserAccount"
