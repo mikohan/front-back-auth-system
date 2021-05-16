@@ -3,6 +3,9 @@ import {
   USER_LOGIN_FAIL,
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
+  USER_AUTHENTICATED_SUCCESS,
+  USER_AUTHENTICATED_FAIL,
+  USER_LOGOUT,
   IUserAction,
 } from './userActionTypes';
 import { IState } from '../../intefaces';
@@ -19,6 +22,17 @@ export const userReducer = (
   action: IUserAction
 ) => {
   switch (action.type) {
+    case USER_AUTHENTICATED_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+      };
+    case USER_AUTHENTICATED_FAIL:
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
+
     case USER_LOGIN_SUCCESS:
       localStorage.setItem('access', JSON.stringify(action.payload?.access!));
       return {
@@ -45,6 +59,16 @@ export const userReducer = (
     case USER_LOADED_FAIL:
       return {
         ...state,
+        user: null,
+      };
+    case USER_LOGOUT:
+      localStorage.removeItem('access');
+      localStorage.removeItem('refresh');
+      return {
+        ...state,
+        isAuthenticated: false,
+        access: null,
+        refresh: null,
         user: null,
       };
 
