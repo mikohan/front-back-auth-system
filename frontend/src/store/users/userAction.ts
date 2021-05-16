@@ -11,6 +11,8 @@ import {
   USER_AUTHENTICATED_SUCCESS,
   USER_AUTHENTICATED_FAIL,
   USER_LOGOUT,
+  USER_PASSWORD_RESET_SUCCESS,
+  USER_PASSWORD_RESET_FAIL,
 } from './userActionTypes';
 
 export const checkAuthenticated = () => async (
@@ -115,4 +117,24 @@ export const logout = () => (
   dispatch({
     type: USER_LOGOUT,
   });
+};
+
+export const resetPassword = (email: string) => async (
+  dispatch: ThunkDispatch<IState, void, IUserAction>
+) => {
+  const body = { email };
+  const url = `${process.env.REACT_APP_API_URL}/auth/users/reset_password/`;
+  try {
+    await axios.post(url, body);
+    dispatch({
+      type: USER_PASSWORD_RESET_SUCCESS,
+      payload: email,
+    });
+  } catch (e) {
+    console.log('Cannot call api reset password', e);
+    dispatch({
+      type: USER_PASSWORD_RESET_FAIL,
+      payload: null,
+    });
+  }
 };
