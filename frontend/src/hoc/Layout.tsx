@@ -13,13 +13,19 @@ export interface Props {
 
 function Layout(props: Props): ReactElement | null {
   useEffect(() => {
-    if (!props.isAuthenticated) {
-      props.checkAuthenticated();
-    }
-    if (props.isAuthenticated) {
-      props.loadUser();
-    }
-  });
+    try {
+      const ls = localStorage.getItem('access');
+      if (ls) {
+        if (!props.isAuthenticated) {
+          props.checkAuthenticated();
+        }
+        if (props.isAuthenticated) {
+          props.loadUser();
+        }
+      }
+    } catch (e) {}
+  }, []);
+
   return (
     <div>
       <Navbar />
