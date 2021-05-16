@@ -6,6 +6,10 @@ import {
   USER_AUTHENTICATED_SUCCESS,
   USER_AUTHENTICATED_FAIL,
   USER_LOGOUT,
+  USER_PASSWORD_RESET_SUCCESS,
+  USER_PASSWORD_RESET_FAIL,
+  USER_PASSWORD_RESET_CONFIRM_SUCCESS,
+  USER_PASSWORD_RESET_CONFIRM_FAIL,
   IUserAction,
 } from './userActionTypes';
 import { IUserState } from '../../intefaces';
@@ -70,6 +74,13 @@ export const userReducer = (
         access: null,
         refresh: null,
         user: null,
+      };
+    case USER_PASSWORD_RESET_SUCCESS:
+    case USER_PASSWORD_RESET_FAIL:
+    case USER_PASSWORD_RESET_CONFIRM_SUCCESS:
+    case USER_PASSWORD_RESET_CONFIRM_FAIL:
+      return {
+        ...state,
       };
 
     default:

@@ -34,13 +34,11 @@ export interface IUserAuthenticatedCheckAction {
 
 export interface IUserResetPasswordAction {
   type: typeof USER_PASSWORD_RESET_SUCCESS | typeof USER_PASSWORD_RESET_FAIL;
-  payload: string | null;
 }
 export interface IUserResetPasswordConfirmAction {
   type:
     | typeof USER_PASSWORD_RESET_CONFIRM_SUCCESS
     | typeof USER_PASSWORD_RESET_CONFIRM_FAIL;
-  payload: string | null;
 }
 
 export type IUserAction =

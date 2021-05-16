@@ -128,7 +128,26 @@ export const resetPassword = (email: string) => async (
     await axios.post(url, body);
     dispatch({
       type: USER_PASSWORD_RESET_SUCCESS,
-      payload: email,
+    });
+  } catch (e) {
+    console.log('Cannot call api reset password', e);
+    dispatch({
+      type: USER_PASSWORD_RESET_FAIL,
+    });
+  }
+};
+
+export const resetPasswordConfirm = (
+  uid: string,
+  token: string,
+  password: string
+) => async (dispatch: ThunkDispatch<IState, void, IUserAction>) => {
+  const body = { uid, token, password };
+  const url = `${process.env.REACT_APP_API_URL}/auth/users/reset_password/`;
+  try {
+    await axios.post(url, body);
+    dispatch({
+      type: USER_PASSWORD_RESET_SUCCESS,
     });
   } catch (e) {
     console.log('Cannot call api reset password', e);
