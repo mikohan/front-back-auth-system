@@ -66,7 +66,7 @@ export default function ResetPasswordConfirm({
     <Container maxWidth="lg">
       <Grid container>
         <Grid className={classes.title} item xs={12}>
-          <Typography variant="h5">Password Reset Page</Typography>
+          <Typography variant="h5">Enter your new password</Typography>
         </Grid>
         <Grid item xs={6}>
           <Grid className={classes.textField} item xs={12}>
