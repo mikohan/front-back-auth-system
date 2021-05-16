@@ -38,7 +38,9 @@ export interface ILogin {
 export default function Login(): ReactElement | null {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const isAuthenticated = useSelector((state: IState) => state.isAuthenticated);
+  const isAuthenticated = useSelector(
+    (state: IState) => state.user.isAuthenticated
+  );
 
   const [formData, setFormData] = useState<ILogin>({
     email: '',
@@ -55,6 +57,9 @@ export default function Login(): ReactElement | null {
 
   // is the user authenticated
   // Redirect to home page
+  if (isAuthenticated) {
+    return <Redirect to="/" />;
+  }
 
   return (
     <Container maxWidth="lg">

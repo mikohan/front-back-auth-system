@@ -8,9 +8,9 @@ import {
   USER_LOGOUT,
   IUserAction,
 } from './userActionTypes';
-import { IState } from '../../intefaces';
+import { IUserState } from '../../intefaces';
 
-const initialState: IState = {
+const initialState: IUserState = {
   access: localStorage.getItem('access') || null,
   refresh: localStorage.getItem('refresh') || null,
   isAuthenticated: false,
@@ -18,7 +18,7 @@ const initialState: IState = {
 };
 
 export const userReducer = (
-  state: IState = initialState,
+  state: IUserState = initialState,
   action: IUserAction
 ) => {
   switch (action.type) {
