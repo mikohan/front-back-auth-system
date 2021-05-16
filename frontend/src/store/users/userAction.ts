@@ -13,6 +13,8 @@ import {
   USER_LOGOUT,
   USER_PASSWORD_RESET_SUCCESS,
   USER_PASSWORD_RESET_FAIL,
+  USER_PASSWORD_RESET_CONFIRM_SUCCESS,
+  USER_PASSWORD_RESET_CONFIRM_FAIL,
 } from './userActionTypes';
 
 export const checkAuthenticated = () => async (
@@ -143,16 +145,16 @@ export const resetPasswordConfirm = (
   password: string
 ) => async (dispatch: ThunkDispatch<IState, void, IUserAction>) => {
   const body = { uid, token, password };
-  const url = `${process.env.REACT_APP_API_URL}/auth/users/reset_password/`;
+  const url = `${process.env.REACT_APP_API_URL}/auth/users/reset_password_confirm/`;
   try {
     await axios.post(url, body);
     dispatch({
-      type: USER_PASSWORD_RESET_SUCCESS,
+      type: USER_PASSWORD_RESET_CONFIRM_SUCCESS,
     });
   } catch (e) {
     console.log('Cannot call api reset password', e);
     dispatch({
-      type: USER_PASSWORD_RESET_FAIL,
+      type: USER_PASSWORD_RESET_CONFIRM_FAIL,
       payload: null,
     });
   }
