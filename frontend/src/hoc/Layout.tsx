@@ -1,5 +1,5 @@
 import React, { ReactElement } from 'react';
-import Navbar from '~/components/Navbar';
+import Navbar from '../components/Navbar';
 
 export interface Props {
   children: ReactElement;
