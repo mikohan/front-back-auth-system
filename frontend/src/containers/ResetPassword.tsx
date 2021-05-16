@@ -38,7 +38,9 @@ export default function ResetPassword(
   const [email, setEmail] = React.useState('');
   const dispatch = useDispatch();
 
-  function onChange(event: React.ChangeEvent<HTMLImageElement>) {}
+  function onChange(event: React.ChangeEvent<HTMLInputElement>) {
+    setEmail(event.target.value);
+  }
 
   function onSubmit() {
     dispatch(resetPassword(email));
@@ -53,7 +55,7 @@ export default function ResetPassword(
     <Container maxWidth="lg">
       <Grid container>
         <Grid className={classes.title} item xs={12}>
-          <Typography variant="h5">Sign In to account</Typography>
+          <Typography variant="h5">Password Reset Page</Typography>
         </Grid>
         <Grid item xs={6}>
           <Grid className={classes.textField} item xs={12}>
@@ -66,11 +68,12 @@ export default function ResetPassword(
               type="email"
               fullWidth
               required
+              onChange={onChange}
             />
           </Grid>
           <Grid className={classes.textField} item xs={12}>
             <Button variant="contained" color="primary" onClick={onSubmit}>
-              Submit
+              Reset Password
             </Button>
           </Grid>
         </Grid>
