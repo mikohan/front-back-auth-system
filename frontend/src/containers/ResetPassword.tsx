@@ -7,6 +7,9 @@ import {
   TextField,
   Button,
 } from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { resetPassword, resetPasswordConfirm } from '../store/users/userAction';
+import { Redirect } from 'react-router';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -31,9 +34,20 @@ export default function ResetPassword(
   props: ResetPasswordProps
 ): ReactElement | null {
   const classes = useStyles();
+  const [requestSent, setRequestSent] = React.useState(false);
+  const [email, setEmail] = React.useState('');
+  const dispatch = useDispatch();
+
+  function onChange(event: React.ChangeEvent<HTMLImageElement>) {}
+
   function onSubmit() {
-    console.log('submit');
+    dispatch(resetPassword(email));
+    setRequestSent(true);
   }
+  if (requestSent) {
+    return <Redirect to="/" />;
+  }
+
   return (
     <Container maxWidth="lg">
       <Grid container>
