@@ -5,7 +5,7 @@ export interface Props {
   children: ReactElement;
 }
 
-export default function (props: Props): ReactElement | null {
+export default function Layout(props: Props): ReactElement | null {
   return (
     <div>
       <Navbar />
