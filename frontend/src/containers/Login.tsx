@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core';
 import { login } from '../store/users/userAction';
 import { useSelector, useDispatch } from 'react-redux';
+import { IState } from '../intefaces';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,7 @@ export interface ILogin {
 export default function Login(): ReactElement | null {
   const classes = useStyles();
   const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state: IState) => state.isAuthenticated);
 
   const [formData, setFormData] = useState<ILogin>({
     email: '',
