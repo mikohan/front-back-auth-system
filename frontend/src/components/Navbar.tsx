@@ -1,3 +1,4 @@
+import { Fragment } from 'react';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -6,6 +7,10 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import { Link } from 'react-router-dom';
+import { logout } from '../store/users/userAction';
+import { useDispatch, useSelector } from 'react-redux';
+import { IState, IUser } from '../intefaces';
+import { Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -27,6 +32,37 @@ const useStyles = makeStyles((theme: Theme) =>
 
 export default function ButtonAppBar() {
   const classes = useStyles();
+  const dispatch = useDispatch();
+  const user = useSelector((state: IState) => state.user.user);
+  const isAuthenticated = useSelector(
+    (state: IState) => state.user.isAuthenticated
+  );
+
+  function handleLogout() {
+    dispatch(logout());
+  }
+
+  const GuestLinks = () => (
+    <Fragment>
+      <Button color="inherit">
+        <Link to="/login">Login</Link>
+      </Button>
+      <Button color="inherit">
+        <Link to="/signup">SignUp</Link>
+      </Button>
+    </Fragment>
+  );
+  interface IAuthLinksProps {
+    user: IUser | null;
+  }
+  const AuthLinks = ({ user }: IAuthLinksProps) => (
+    <Fragment>
+      <Button color="inherit">{user?.email}</Button>
+      <Button color="inherit" onClick={handleLogout}>
+        Logout
+      </Button>
+    </Fragment>
+  );
 
   return (
     <div className={classes.root}>
@@ -43,12 +79,9 @@ export default function ButtonAppBar() {
           <Typography variant="h6" className={classes.title}>
             <Link to="/">Home</Link>
           </Typography>
-          <Button color="inherit">
-            <Link to="/login">Login</Link>
-          </Button>
-          <Button color="inherit">
-            <Link to="/signup">SignUp</Link>
-          </Button>
+          <Box>
+            {isAuthenticated ? <AuthLinks user={user} /> : <GuestLinks />}
+          </Box>
         </Toolbar>
       </AppBar>
     </div>
