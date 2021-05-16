@@ -34,7 +34,7 @@ export interface ILogin {
   password: string;
 }
 
-export default function Login(props: LoginProps): ReactElement | null {
+export default function Login(): ReactElement | null {
   const classes = useStyles();
   const dispatch = useDispatch();
 
@@ -46,8 +46,7 @@ export default function Login(props: LoginProps): ReactElement | null {
   function onChange(e: React.ChangeEvent<HTMLInputElement>) {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   }
-  function onSubmit(e: React.MouseEvent<HTMLElement>) {
-    //e.preventDefault();
+  function onSubmit() {
     // login(emal, password)
     dispatch(login(formData.email, formData.password));
   }
@@ -89,13 +88,7 @@ export default function Login(props: LoginProps): ReactElement | null {
             />
           </Grid>
           <Grid className={classes.textField} item xs={12}>
-            <Button
-              variant="contained"
-              color="primary"
-              onClick={(event: React.MouseEvent<HTMLElement>) =>
-                onSubmit(event)
-              }
-            >
+            <Button variant="contained" color="primary" onClick={onSubmit}>
               Submit
             </Button>
           </Grid>

@@ -8,8 +8,46 @@ import {
   USER_LOADED_SUCCESS,
   USER_LOADED_FAIL,
   IUserAction,
+  USER_AUTHENTICATED_SUCCESS,
+  USER_AUTHENTICATED_FAIL,
+  USER_LOGOUT,
 } from './userActionTypes';
-import { IUser } from '../../intefaces';
+
+export const checkAuthenticated = () => async (
+  dispatch: ThunkDispatch<IState, void, IUserAction>
+) => {
+  let token: string | null = null;
+  try {
+    token = JSON.parse(localStorage.getItem('access') as string);
+  } catch (e) {
+    console.log('Cant get tocken from localstorage', e);
+  }
+
+  if (localStorage.getItem('access')) {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/auth/jwt/verify/`;
+      const body = { token: token };
+      const res = await axios.post(url, body);
+      if (res.data.code !== 'token_not_valid') {
+        dispatch({
+          type: USER_AUTHENTICATED_SUCCESS,
+        });
+      } else {
+        dispatch({
+          type: USER_AUTHENTICATED_FAIL,
+        });
+      }
+    } catch (e) {
+      dispatch({
+        type: USER_AUTHENTICATED_FAIL,
+      });
+    }
+  } else {
+    dispatch({
+      type: USER_AUTHENTICATED_FAIL,
+    });
+  }
+};
 
 export const loadUser = () => async (
   dispatch: ThunkDispatch<IState, void, IUserAction>
@@ -29,8 +67,7 @@ export const loadUser = () => async (
       },
     };
     try {
-      //const url = `${process.env.REACT_APP_API_URL}/auth/users/me/`;
-      const url = 'http://localhost:8001/auth/users/me/';
+      const url = `${process.env.REACT_APP_API_URL}/auth/users/me/`;
       const res = await axios.get(url, config);
       dispatch({
         type: USER_LOADED_SUCCESS,
@@ -38,16 +75,16 @@ export const loadUser = () => async (
       });
     } catch (e) {
       console.log('Cant Load User on line 40 userActions in store ', e);
-      // dispatch({
-      //   type: USER_LOADED_FAIL,
-      //   payload: null,
-      // });
+      dispatch({
+        type: USER_LOADED_FAIL,
+        payload: null,
+      });
     }
   } else {
-    // dispatch({
-    //   type: USER_LOADED_FAIL,
-    //   payload: null,
-    // });
+    dispatch({
+      type: USER_LOADED_FAIL,
+      payload: null,
+    });
   }
 };
 
@@ -70,4 +107,12 @@ export const login = (email: string, password: string) => async (
       payload: null,
     });
   }
+};
+
+export const logout = () => (
+  dispatch: ThunkDispatch<IState, void, IUserAction>
+) => {
+  dispatch({
+    type: USER_LOGOUT,
+  });
 };
