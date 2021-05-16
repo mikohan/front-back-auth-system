@@ -45,6 +45,7 @@ export default function ResetPassword(
     setRequestSent(true);
   }
   if (requestSent) {
+    setRequestSent(false);
     return <Redirect to="/" />;
   }
 
