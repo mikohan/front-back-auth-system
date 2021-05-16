@@ -5,3 +5,8 @@ export interface IUser {
   first_name?: string;
   last_name?: string;
 }
+
+export interface IJwt {
+  access: string;
+  refresh: string;
+}
