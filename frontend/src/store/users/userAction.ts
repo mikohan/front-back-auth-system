@@ -20,6 +20,7 @@ export const loadUser = () => async (
   } catch (e) {
     console.log('Cannot get token from localstorage', e);
   }
+
   if (token) {
     const config = {
       headers: {
@@ -28,24 +29,25 @@ export const loadUser = () => async (
       },
     };
     try {
-      const url = `${process.env.REACT_APP_API_URL}/auth/users/me/`;
+      //const url = `${process.env.REACT_APP_API_URL}/auth/users/me/`;
+      const url = 'http://localhost:8001/auth/users/me/';
       const res = await axios.get(url, config);
       dispatch({
-        type: USER_LOGIN_SUCCESS,
+        type: USER_LOADED_SUCCESS,
         payload: res.data,
       });
     } catch (e) {
-      console.log('Cant create token in actions 21 line', e);
-      dispatch({
-        type: USER_LOADED_FAIL,
-        payload: null,
-      });
+      console.log('Cant Load User on line 40 userActions in store ', e);
+      // dispatch({
+      //   type: USER_LOADED_FAIL,
+      //   payload: null,
+      // });
     }
   } else {
-    dispatch({
-      type: USER_LOADED_FAIL,
-      payload: null,
-    });
+    // dispatch({
+    //   type: USER_LOADED_FAIL,
+    //   payload: null,
+    // });
   }
 };
 

@@ -15,7 +15,7 @@ SECRET_KEY = "django-insecure-6eb2hoj^vk@-!k3(^5pbkw$lntx^p%53+kjkc$du++=**@@y7z
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["0.0.0.0"]
+ALLOWED_HOSTS = ["0.0.0.0", "localhost"]
 
 
 # Application definition
@@ -30,6 +30,7 @@ INSTALLED_APPS = [
     "rest_framework",
     "djoser",
     "accounts",
+    "corsheaders",
 ]
 
 MIDDLEWARE = [
@@ -40,6 +41,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "corsheaders.middleware.CorsMiddleware",
+    "django.middleware.common.CommonMiddleware",
 ]
 
 ROOT_URLCONF = "jwt_project.urls"
@@ -149,3 +152,13 @@ DJOSER = {
 }
 
 AUTH_USER_MODEL = "accounts.UserAccount"
+CORS_ORIGIN_ALLOW_ALL = (
+    True  # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
+)
+CORS_ALLOW_CREDENTIALS = True
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+]  # If this is used, then not need to use `CORS_ORIGIN_ALLOW_ALL = True`
+CORS_ORIGIN_REGEX_WHITELIST = [
+    "http://localhost:3000",
+]

@@ -8,6 +8,8 @@ import {
   TextField,
   Button,
 } from '@material-ui/core';
+import { login } from '../store/users/userAction';
+import { useSelector, useDispatch } from 'react-redux';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -34,6 +36,8 @@ export interface ILogin {
 
 export default function Login(props: LoginProps): ReactElement | null {
   const classes = useStyles();
+  const dispatch = useDispatch();
+
   const [formData, setFormData] = useState<ILogin>({
     email: '',
     password: '',
@@ -45,6 +49,7 @@ export default function Login(props: LoginProps): ReactElement | null {
   function onSubmit(e: React.MouseEvent<HTMLElement>) {
     //e.preventDefault();
     // login(emal, password)
+    dispatch(login(formData.email, formData.password));
   }
 
   // is the user authenticated
@@ -59,6 +64,7 @@ export default function Login(props: LoginProps): ReactElement | null {
         <Grid item xs={6}>
           <Grid className={classes.textField} item xs={12}>
             <TextField
+              name="email"
               defaultValue=""
               variant="outlined"
               placeholder="Email"
@@ -66,10 +72,12 @@ export default function Login(props: LoginProps): ReactElement | null {
               type="email"
               fullWidth
               required
+              onChange={onChange}
             />
           </Grid>
           <Grid className={classes.textField} item xs={12}>
             <TextField
+              name="password"
               defaultValue=""
               variant="outlined"
               placeholder="Password"

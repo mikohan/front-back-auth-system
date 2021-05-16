@@ -8,16 +8,19 @@ import {
 import { IState } from '../../intefaces';
 
 const initialState: IState = {
-  access: localStorage.getItem('access') || '',
-  refresh: localStorage.getItem('refresh') || '',
+  access: localStorage.getItem('access') || null,
+  refresh: localStorage.getItem('refresh') || null,
   isAuthenticated: false,
   user: null,
 };
 
-export const userReducer = (state: IState, action: IUserAction) => {
+export const userReducer = (
+  state: IState = initialState,
+  action: IUserAction
+) => {
   switch (action.type) {
     case USER_LOGIN_SUCCESS:
-      localStorage.setItem('assess', JSON.stringify(action.payload?.access!));
+      localStorage.setItem('access', JSON.stringify(action.payload?.access!));
       return {
         ...state,
         isAuthenticated: true,
