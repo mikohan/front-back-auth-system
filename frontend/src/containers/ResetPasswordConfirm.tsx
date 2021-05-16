@@ -30,26 +30,32 @@ const useStyles = makeStyles((theme: Theme) =>
   })
 );
 export interface ResetPasswordProps {
-  uid: string;
-  token: string;
+  match: {
+    params: {
+      uid: string;
+      token: string;
+    };
+  };
 }
 
 export default function ResetPasswordConfirm({
-  uid,
-  token,
+  match,
 }: ResetPasswordProps): ReactElement | null {
   const classes = useStyles();
   const [requestSent, setRequestSent] = React.useState(false);
   const [password, setPassword] = React.useState('');
   const dispatch = useDispatch();
+  const { uid, token } = match.params;
 
   function onChange(event: React.ChangeEvent<HTMLInputElement>) {
     setPassword(event.target.value);
   }
 
   function onSubmit() {
-    dispatch(resetPasswordConfirm(uid, token, password));
-    setRequestSent(true);
+    if (password) {
+      dispatch(resetPasswordConfirm(uid, token, password));
+      setRequestSent(true);
+    }
   }
   if (requestSent) {
     setRequestSent(false);
