@@ -58,7 +58,6 @@ export default function ResetPasswordConfirm({
     }
   }
   if (requestSent) {
-    setRequestSent(false);
     return <Redirect to="/" />;
   }
 
