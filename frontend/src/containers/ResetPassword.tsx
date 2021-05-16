@@ -30,9 +30,7 @@ const useStyles = makeStyles((theme: Theme) =>
 );
 export interface ResetPasswordProps {}
 
-export default function ResetPassword(
-  props: ResetPasswordProps
-): ReactElement | null {
+export default function ResetPassword(): ReactElement | null {
   const classes = useStyles();
   const [requestSent, setRequestSent] = React.useState(false);
   const [email, setEmail] = React.useState('');
@@ -43,8 +41,10 @@ export default function ResetPassword(
   }
 
   function onSubmit() {
-    dispatch(resetPassword(email));
-    setRequestSent(true);
+    if (email) {
+      dispatch(resetPassword(email));
+      setRequestSent(true);
+    }
   }
   if (requestSent) {
     setRequestSent(false);
