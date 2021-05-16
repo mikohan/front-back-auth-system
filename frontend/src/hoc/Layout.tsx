@@ -1,11 +1,19 @@
-import React, { ReactElement } from 'react';
+import { ReactElement, useEffect } from 'react';
 import Navbar from '../components/Navbar';
+import { checkAuthenticated, loadUser } from '../store/users/userAction';
+import { connect } from 'react-redux';
 
 export interface Props {
   children: ReactElement;
+  checkAuthenticated(): void;
+  loadUser(): void;
 }
 
-export default function Layout(props: Props): ReactElement | null {
+function Layout(props: Props): ReactElement | null {
+  useEffect(() => {
+    props.checkAuthenticated();
+    props.loadUser();
+  });
   return (
     <div>
       <Navbar />
@@ -13,3 +21,5 @@ export default function Layout(props: Props): ReactElement | null {
     </div>
   );
 }
+
+export default connect(null, { checkAuthenticated, loadUser })(Layout);
