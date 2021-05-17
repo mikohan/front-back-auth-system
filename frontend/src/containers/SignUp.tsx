@@ -39,9 +39,7 @@ export default function Login(): ReactElement | null {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
-  const isAuthenticated = useSelector(
-    (state: IState) => state.user.isAuthenticated
-  );
+  const [accountCreated, setAccountCreated] = useState<boolean>(false);
 
   const [formData, setFormData] = useState<ILogin>({
     email: '',
@@ -55,6 +53,7 @@ export default function Login(): ReactElement | null {
     // login(emal, password)
     if ((formData.email, formData.password)) {
       dispatch(signup(formData.email, formData.password));
+      setAccountCreated(true);
     } else {
       setError('Email and password cannot be empty');
     }
@@ -62,7 +61,7 @@ export default function Login(): ReactElement | null {
 
   // is the user authenticated
   // Redirect to home page
-  if (isAuthenticated) {
+  if (accountCreated) {
     return <Redirect to="/" />;
   }
 
