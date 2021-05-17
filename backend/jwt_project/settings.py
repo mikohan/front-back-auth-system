@@ -160,7 +160,7 @@ DJOSER = {
     "SEND_ACTIVATION_EMAIL": True,
     "SOCIAL_AUTH_TOKEN_STRATEGY": "djoser.social.token.jwt.TokenStrategy",
     "SOCIAL_AUTH_ALLOWED_REDIRECT_URIS": [
-        "http://localhost:8000/google",
+        "http://localhost:8001/google",
         "http://localhost:3000/google",
         "http://localhost:8000/facebook",
     ],

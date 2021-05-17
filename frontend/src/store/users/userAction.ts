@@ -134,11 +134,14 @@ export const googleLogin = (state: string, code: string) => async (
       state: state,
       code: code,
     };
-    const formBody = Object.keys(details).map(
-      (key: string) =>
-        `${encodeURIComponent(key)}=${encodeURIComponent(details[key])}&`
-    );
-    console.log(formBody);
+
+    const formBody = Object.keys(details)
+      .map(
+        (key) =>
+          encodeURIComponent(key) + '=' + encodeURIComponent(details[key])
+      )
+      .join('&');
+    console.log('IN', formBody);
     const url = `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?${formBody}`;
     try {
       const res = await axios.post(url, config);

@@ -25,13 +25,14 @@ function Layout(props: Props): ReactElement | null {
     const values = queryString.parse(location.search);
     const state = values.state ? (values.state as string) : null;
     const code = values.code ? (values.code as string) : null;
+    if (state && code) {
+      props.googleLogin(state, code);
+    }
     console.log(state, code, 'In layout state code');
     try {
       const ls = localStorage.getItem('access');
       if (ls) {
-        if (state && code) {
-          props.googleLogin(state, code);
-        } else if (!props.isAuthenticated) {
+        if (!props.isAuthenticated) {
           props.checkAuthenticated();
         }
         if (props.isAuthenticated) {
