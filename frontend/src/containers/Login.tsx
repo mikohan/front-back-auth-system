@@ -11,6 +11,7 @@ import {
 import { login } from '../store/users/userAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../intefaces';
+import axios from 'axios';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -61,6 +62,16 @@ export default function Login(): ReactElement | null {
     return <Redirect to="/" />;
   }
 
+  async function onGoogle() {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/auth/o/google-auth2/?redirect_uri=http://${process.env.REACT_SELF_URL}`;
+      const res = await axios.get(url);
+      console.log(res);
+    } catch (e) {
+      console.log('Continue with google fail', e);
+    }
+  }
+
   return (
     <Container maxWidth="lg">
       <Grid container>
@@ -107,6 +118,11 @@ export default function Login(): ReactElement | null {
               Forgot your password?{' '}
               <Link to="/reset-password">Reset Password</Link>
             </span>
+          </Grid>
+          <Grid className={classes.textField} item xs={12}>
+            <Button variant="contained" color="secondary" onClick={onGoogle}>
+              Continue with Google
+            </Button>
           </Grid>
         </Grid>
       </Grid>
