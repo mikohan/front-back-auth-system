@@ -142,7 +142,7 @@ export const googleLogin = (state: string, code: string) => async (
       )
       .join('&');
     console.log('IN', formBody);
-    const url = `http://localhost:8001/auth/o/google-oauth2/?${formBody}`;
+    const url = `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?${formBody}`;
     try {
       const res = await axios.post(url, config);
       console.log(res);
