@@ -118,6 +118,34 @@ export const login = (email: string, password: string) => async (
     });
   }
 };
+// Google user login
+export const googleLogin = (state: string, code: string) => async (
+  dispatch: ThunkDispatch<IState, void, IUserAction>
+) => {
+  if (state && code && !localStorage.getItem('access')) {
+    const config = {
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+      },
+    };
+    const details: { [key: string]: string } = {
+      state: state,
+      code: code,
+    };
+    const formBody = Object.keys(details).map(
+      (key: string) =>
+        `${encodeURIComponent(key)}=${encodeURIComponent(details[key])}&`
+    );
+    console.log(formBody);
+    const url = `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?${formBody}`;
+    try {
+      const res = await axios.post(url, config);
+      console.log(res);
+    } catch (e) {
+      console.log('Error in googel authentication action', e);
+    }
+  }
+};
 
 // USER sign up
 
