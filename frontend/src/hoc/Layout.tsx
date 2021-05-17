@@ -39,7 +39,7 @@ function Layout(props: Props): ReactElement | null {
         }
       }
     } catch (e) {}
-  }, [location]);
+  }, [location, props]);
 
   return (
     <div>
