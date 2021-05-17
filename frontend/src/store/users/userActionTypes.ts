@@ -45,10 +45,20 @@ export interface IUserResetPasswordConfirmAction {
     | typeof USER_PASSWORD_RESET_CONFIRM_FAIL;
 }
 
+export interface IUserSignUpAction {
+  type: typeof USER_SIGN_UP_SUCCESS | typeof USER_SIGN_UP_FAIL;
+  payload: boolean | null;
+}
+export interface IUserActivationAction {
+  type: typeof USER_ACTIVATION_SUCCESS | typeof USER_ACTIVATION_FAIL;
+}
+
 export type IUserAction =
   | IUserLogin
   | IUserFetchAction
   | ILogout
   | IUserAuthenticatedCheckAction
   | IUserResetPasswordAction
-  | IUserResetPasswordConfirmAction;
+  | IUserResetPasswordConfirmAction
+  | IUserSignUpAction
+  | IUserActivationAction;
