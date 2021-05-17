@@ -75,7 +75,7 @@ export default function Login(): ReactElement | null {
     <Container maxWidth="lg">
       <Grid container>
         <Grid className={classes.title} item xs={12}>
-          <Typography variant="h5">Sign In to account</Typography>
+          <Typography variant="h5">Make account</Typography>
         </Grid>
         {error && (
           <Grid className={classes.title} item xs={12}>
