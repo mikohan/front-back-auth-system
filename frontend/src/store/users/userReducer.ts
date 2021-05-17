@@ -15,6 +15,8 @@ import {
   USER_ACTIVATION_SUCCESS,
   USER_ACTIVATION_FAIL,
   IUserAction,
+  USER_GOOGLE_LOGIN_SUCCESS,
+  USER_GOOGLE_LOGIN_FAIL,
 } from './userActionTypes';
 import { IUserState } from '../../intefaces';
 
@@ -64,7 +66,15 @@ export const userReducer = (
         ...state,
         user: null,
       };
+    case USER_GOOGLE_LOGIN_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: true,
+        access: action.payload.access,
+        refresh: action.payload.refresh,
+      };
     case USER_LOGOUT:
+    case USER_GOOGLE_LOGIN_FAIL:
     case USER_LOGIN_FAIL:
     case USER_SIGN_UP_FAIL:
       localStorage.removeItem('access');
