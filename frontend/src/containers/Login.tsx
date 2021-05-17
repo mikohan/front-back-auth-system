@@ -67,6 +67,9 @@ export default function Login(): ReactElement | null {
       const url = `${process.env.REACT_APP_API_URL}/auth/o/google-auth2/?redirect_uri=http://${process.env.REACT_SELF_URL}`;
       const res = await axios.get(url);
       console.log(res);
+      if (typeof window !== 'undefined') {
+        window.location.replace(res.data.authorization_url);
+      }
     } catch (e) {
       console.log('Continue with google fail', e);
     }
