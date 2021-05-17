@@ -33,6 +33,8 @@ INSTALLED_APPS = [
     "social_django",
     "rest_framework_simplejwt",
     "rest_framework_simplejwt.token_blacklist",
+    "oauth2_provider",
+    "rest_framework_social_oauth2",
 ]
 
 MIDDLEWARE = [
@@ -130,13 +132,16 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ["rest_framework.permissions.IsAuthenticated"],
     "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.SessionAuthentication",
+        "oauth2_provider.contrib.rest_framework.OAuth2Authentication",
+        "rest_framework_social_oauth2.authentication.SocialAuthentication",
         "rest_framework_simplejwt.authentication.JWTAuthentication",
     ),
 }
 SOCIAL_AUTH_RAISE_EXCEPTIONS = False
 
 AUTHENTICATION_BACKENDS = (
+    "social_core.backends.vk.VKOAuth2",
+    "rest_framework_social_oauth2.backends.DjangoOAuth2",
     "social_core.backends.google.GoogleOAuth2",
     "social_core.backends.facebook.FacebookOAuth2",
     "django.contrib.auth.backends.ModelBackend",
