@@ -40,6 +40,11 @@ export const userReducer = (
         ...state,
         isAuthenticated: false,
       };
+    case USER_SIGN_UP_SUCCESS:
+      return {
+        ...state,
+        isAuthenticated: false,
+      };
 
     case USER_LOGIN_SUCCESS:
       localStorage.setItem('access', JSON.stringify(action.payload?.access!));
