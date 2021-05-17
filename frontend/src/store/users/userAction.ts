@@ -15,6 +15,10 @@ import {
   USER_PASSWORD_RESET_FAIL,
   USER_PASSWORD_RESET_CONFIRM_SUCCESS,
   USER_PASSWORD_RESET_CONFIRM_FAIL,
+  USER_SIGN_UP_SUCCESS,
+  USER_SIGN_UP_FAIL,
+  USER_ACTIVATION_SUCCESS,
+  USER_ACTIVATION_FAIL,
 } from './userActionTypes';
 
 export const checkAuthenticated = () => async (
@@ -92,6 +96,8 @@ export const loadUser = () => async (
   }
 };
 
+// USER login
+
 export const login = (email: string, password: string) => async (
   dispatch: ThunkDispatch<IState, void, IUserAction>
 ) => {
@@ -108,6 +114,49 @@ export const login = (email: string, password: string) => async (
     console.log('Cant create token in actions 21 line', e);
     dispatch({
       type: USER_LOGIN_FAIL,
+      payload: null,
+    });
+  }
+};
+
+// USER sign up
+
+export const signup = (email: string, password: string) => async (
+  dispatch: ThunkDispatch<IState, void, IUserAction>
+) => {
+  const body = { email, password };
+  const url = `${process.env.REACT_APP_API_URL}/auth/users/`;
+  try {
+    const res = await axios.post(url, body);
+    dispatch({
+      type: USER_SIGN_UP_SUCCESS,
+      payload: res.data,
+    });
+  } catch (e) {
+    console.log('Cant create token in actions 21 line', e);
+    dispatch({
+      type: USER_SIGN_UP_FAIL,
+      payload: null,
+    });
+  }
+};
+// User activation
+
+export const verify = (uid: string, token: string) => async (
+  dispatch: ThunkDispatch<IState, void, IUserAction>
+) => {
+  const body = { uid, token };
+  const url = `${process.env.REACT_APP_API_URL}/auth/users/activation/`;
+  try {
+    const res = await axios.post(url, body);
+    dispatch({
+      type: USER_ACTIVATION_SUCCESS,
+      payload: res.data,
+    });
+  } catch (e) {
+    console.log('Cant create token in actions 21 line', e);
+    dispatch({
+      type: USER_ACTIVATION_FAIL,
       payload: null,
     });
   }
