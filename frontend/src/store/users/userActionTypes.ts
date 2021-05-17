@@ -17,6 +17,8 @@ export const USER_SIGN_UP_SUCCESS = 'USER_SIGN_UP_SUCCESS';
 export const USER_SIGN_UP_FAIL = 'USER_SIGN_UP_FAIL';
 export const USER_ACTIVATION_SUCCESS = 'USER_ACTIVATION_SUCCESS';
 export const USER_ACTIVATION_FAIL = 'USER_ACTIVATION_FAIL';
+export const USER_GOOGLE_LOGIN_SUCCESS = 'USER_GOOGLE_LOGIN_SUCCESS';
+export const USER_GOOGLE_LOGIN_FAIL = 'USER_GOOGLE_LOGIN_FAIL';
 
 export interface IUserLogin {
   type: typeof USER_LOGIN_SUCCESS | typeof USER_LOGIN_FAIL;
@@ -53,6 +55,10 @@ export interface IUserActivationAction {
   type: typeof USER_ACTIVATION_SUCCESS | typeof USER_ACTIVATION_FAIL;
 }
 
+export interface IGoogleLoginAction {
+  type: typeof USER_GOOGLE_LOGIN_SUCCESS | typeof USER_GOOGLE_LOGIN_FAIL;
+}
+
 export type IUserAction =
   | IUserLogin
   | IUserFetchAction
@@ -61,4 +67,5 @@ export type IUserAction =
   | IUserResetPasswordAction
   | IUserResetPasswordConfirmAction
   | IUserSignUpAction
-  | IUserActivationAction;
+  | IUserActivationAction
+  | IGoogleLoginAction;
