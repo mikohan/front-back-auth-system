@@ -40,6 +40,9 @@ export default function Login(): ReactElement | null {
   const dispatch = useDispatch();
   const [error, setError] = useState<string | null>(null);
   const [accountCreated, setAccountCreated] = useState<boolean>(false);
+  const isAuthenticated = useSelector(
+    (state: IState) => state.user.isAuthenticated
+  );
 
   const [formData, setFormData] = useState<ILogin>({
     email: '',
@@ -61,8 +64,11 @@ export default function Login(): ReactElement | null {
 
   // is the user authenticated
   // Redirect to home page
-  if (accountCreated) {
+  if (isAuthenticated) {
     return <Redirect to="/" />;
+  }
+  if (accountCreated) {
+    return <Redirect to="/login" />;
   }
 
   return (
