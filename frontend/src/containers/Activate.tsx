@@ -46,7 +46,7 @@ export default function Activate({
     }
   }
   if (requestSent) {
-    return <Redirect to="/" />;
+    return <Redirect to="/login" />;
   }
 
   return (

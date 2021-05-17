@@ -10,7 +10,6 @@ import {
 import { useDispatch } from 'react-redux';
 import { resetPasswordConfirm } from '../store/users/userAction';
 import { Redirect } from 'react-router';
-import { IState } from '../intefaces';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
