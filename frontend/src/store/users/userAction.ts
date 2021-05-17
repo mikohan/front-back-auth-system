@@ -19,6 +19,8 @@ import {
   USER_SIGN_UP_FAIL,
   USER_ACTIVATION_SUCCESS,
   USER_ACTIVATION_FAIL,
+  USER_GOOGLE_LOGIN_SUCCESS,
+  USER_GOOGLE_LOGIN_FAIL,
 } from './userActionTypes';
 
 export const checkAuthenticated = () => async (
@@ -141,7 +143,16 @@ export const googleLogin = (state: string, code: string) => async (
     try {
       const res = await axios.post(url, config);
       console.log(res);
+      dispatch({
+        type: USER_GOOGLE_LOGIN_SUCCESS,
+        payload: res.data,
+      });
+      dispatch(loadUser() as any);
     } catch (e) {
+      dispatch({
+        type: USER_GOOGLE_LOGIN_FAIL,
+        payload: null,
+      });
       console.log('Error in googel authentication action', e);
     }
   }

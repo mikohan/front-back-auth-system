@@ -70,8 +70,8 @@ export const userReducer = (
       return {
         ...state,
         isAuthenticated: true,
-        access: action.payload.access,
-        refresh: action.payload.refresh,
+        access: action.payload?.access,
+        refresh: action.payload?.refresh,
       };
     case USER_LOGOUT:
     case USER_GOOGLE_LOGIN_FAIL:
