@@ -186,7 +186,6 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SCOPE = [
 ]
 SOCIAL_AUTH_GOOGLE_OAUTH2_EXTRA_DATA = ["first_name", "last_name"]
 
-AUTH_USER_MODEL = "accounts.UserAccount"
 CORS_ORIGIN_ALLOW_ALL = (
     True  # If this is used then `CORS_ORIGIN_WHITELIST` will not have any effect
 )
@@ -197,3 +196,6 @@ CORS_ORIGIN_WHITELIST = [
 CORS_ORIGIN_REGEX_WHITELIST = [
     "http://localhost:3000",
 ]
+
+SOCIAL_AUTH_USER_MODEL = "accounts.UserAccount"
+AUTH_USER_MODEL = "accounts.UserAccount"
