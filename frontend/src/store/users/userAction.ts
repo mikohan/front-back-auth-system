@@ -1,6 +1,6 @@
 import { ThunkDispatch } from 'redux-thunk';
 import axios from 'axios';
-import { IState } from '../../intefaces';
+import { IState, IUser } from '../../intefaces';
 
 import {
   USER_LOGIN_SUCCESS,
@@ -120,6 +120,14 @@ export const login = (email: string, password: string) => async (
     });
   }
 };
+
+export function googleLoginAction(access: string, refresh: string) {
+  return {
+    type: USER_LOGIN_SUCCESS,
+    access,
+    refresh,
+  };
+}
 // Google user login
 export const googleLogin = (tokenId: string) => async (
   dispatch: ThunkDispatch<IState, void, IUserAction>
@@ -136,19 +144,25 @@ export const googleLogin = (tokenId: string) => async (
     const url = `http://localhost:8000/auth/social/google/`;
     try {
       const res = await axios.post(url, payload);
-      console.log(res);
+      console.log(res.data);
       // dispatch({
       //   type: USER_GOOGLE_LOGIN_SUCCESS,
       //   payload: res.data,
       // });
       // dispatch(loadUser() as any);
-      return {
+      const response = res.data;
+      console.log(response);
+      const user: IUser = { email: res.data.email };
+
+      dispatch({
         type: USER_GOOGLE_LOGIN_SUCCESS,
         payload: {
-          access: res.data.tokens.access,
-          refresh: res.data.tokens.refresh,
+          access: response.tokens.access,
+          refresh: response.tokens.refresh,
+          email: response.email,
+          username: response.username,
         },
-      };
+      });
     } catch (e) {
       dispatch({
         type: USER_GOOGLE_LOGIN_FAIL,
