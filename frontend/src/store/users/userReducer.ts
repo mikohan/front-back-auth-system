@@ -49,13 +49,17 @@ export const userReducer = (
       };
 
     case USER_LOGIN_SUCCESS:
-      localStorage.setItem('access', action.payload?.access!);
-      localStorage.setItem('refresh', action.payload?.refresh!);
+      localStorage.setItem('access', action.payload?.tokens.access!);
+      localStorage.setItem('refresh', action.payload?.tokens.refresh!);
       return {
         ...state,
         isAuthenticated: true,
-        access: action.payload?.access,
-        refresh: action.payload?.refresh,
+        access: action.payload?.tokens.access,
+        refresh: action.payload?.tokens.refresh,
+        user: {
+          email: action.payload?.email,
+          username: action.payload?.username,
+        },
       };
     case USER_LOADED_SUCCESS:
       return {
@@ -68,13 +72,13 @@ export const userReducer = (
         user: null,
       };
     case USER_GOOGLE_LOGIN_SUCCESS:
-      localStorage.setItem('access', action.payload?.access!);
-      localStorage.setItem('refresh', action.payload?.refresh!);
+      localStorage.setItem('access', action.payload?.tokens.access!);
+      localStorage.setItem('refresh', action.payload?.tokens.refresh!);
       return {
         ...state,
         isAuthenticated: true,
-        access: action.payload?.access,
-        refresh: action.payload?.refresh,
+        access: action.payload?.tokens.access,
+        refresh: action.payload?.tokens.refresh,
         user: {
           email: action.payload?.email,
           username: action.payload?.username,

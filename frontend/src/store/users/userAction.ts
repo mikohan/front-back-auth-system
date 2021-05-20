@@ -104,14 +104,16 @@ export const login = (email: string, password: string) => async (
   dispatch: ThunkDispatch<IState, void, IUserAction>
 ) => {
   const body = { email, password };
-  const url = `${process.env.REACT_APP_API_URL}/auth/jwt/create/`;
+  // const url = `${process.env.REACT_APP_API_URL}/auth/jwt/create/`;
+  const url = `http://localhost:8000/auth/login/`;
   try {
     const res = await axios.post(url, body);
+    const result = res.data.data;
     dispatch({
       type: USER_LOGIN_SUCCESS,
-      payload: res.data,
+      payload: result,
     });
-    dispatch(loadUser() as any);
+    //dispatch(loadUser() as any);
   } catch (e) {
     console.log('Cant create token in actions 21 line', e);
     dispatch({
@@ -155,8 +157,10 @@ export const googleLogin = (tokenId: string) => async (
       dispatch({
         type: USER_GOOGLE_LOGIN_SUCCESS,
         payload: {
-          access: response.tokens.access,
-          refresh: response.tokens.refresh,
+          tokens: {
+            access: response.tokens.access,
+            refresh: response.tokens.refresh,
+          },
           email: response.email,
           username: response.username,
         },
