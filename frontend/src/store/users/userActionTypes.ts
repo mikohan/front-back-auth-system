@@ -57,7 +57,12 @@ export interface IUserActivationAction {
 
 export interface IGoogleLoginAction {
   type: typeof USER_GOOGLE_LOGIN_SUCCESS | typeof USER_GOOGLE_LOGIN_FAIL;
-  payload: IJwt | null;
+  payload: {
+    username?: string;
+    email: string;
+    access: string;
+    refresh: string;
+  } | null;
 }
 
 export type IUserAction =

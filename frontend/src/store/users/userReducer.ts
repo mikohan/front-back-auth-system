@@ -49,7 +49,8 @@ export const userReducer = (
       };
 
     case USER_LOGIN_SUCCESS:
-      localStorage.setItem('access', JSON.stringify(action.payload?.access!));
+      localStorage.setItem('access', action.payload?.access!);
+      localStorage.setItem('refresh', action.payload?.refresh!);
       return {
         ...state,
         isAuthenticated: true,
@@ -67,11 +68,17 @@ export const userReducer = (
         user: null,
       };
     case USER_GOOGLE_LOGIN_SUCCESS:
+      localStorage.setItem('access', action.payload?.access!);
+      localStorage.setItem('refresh', action.payload?.refresh!);
       return {
         ...state,
         isAuthenticated: true,
         access: action.payload?.access,
         refresh: action.payload?.refresh,
+        user: {
+          email: action.payload?.email,
+          username: action.payload?.username,
+        },
       };
     case USER_LOGOUT:
     case USER_GOOGLE_LOGIN_FAIL:

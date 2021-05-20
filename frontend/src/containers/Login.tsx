@@ -69,7 +69,6 @@ export default function Login(): ReactElement | null {
     }
   }
   const responseGoogle = (response: any) => {
-    console.log(response);
     if (response) {
       dispatch(googleLogin(response.tokenId));
     }

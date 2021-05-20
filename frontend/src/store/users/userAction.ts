@@ -144,7 +144,6 @@ export const googleLogin = (tokenId: string) => async (
     const url = `http://localhost:8000/auth/social/google/`;
     try {
       const res = await axios.post(url, payload);
-      console.log(res.data);
       // dispatch({
       //   type: USER_GOOGLE_LOGIN_SUCCESS,
       //   payload: res.data,
@@ -152,7 +151,6 @@ export const googleLogin = (tokenId: string) => async (
       // dispatch(loadUser() as any);
       const response = res.data;
       console.log(response);
-      const user: IUser = { email: res.data.email };
 
       dispatch({
         type: USER_GOOGLE_LOGIN_SUCCESS,

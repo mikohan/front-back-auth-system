@@ -31,14 +31,15 @@ function Layout(props: Props): ReactElement | null {
     console.log(state, code, 'In layout state code');
     try {
       const ls = localStorage.getItem('access');
-      if (ls) {
-        if (!props.isAuthenticated) {
-          props.checkAuthenticated();
-        }
-        if (props.isAuthenticated) {
-          props.loadUser();
-        }
-      }
+      console.log(ls, 'In layout string 34');
+      /* if (ls) { */
+      /*   if (!props.isAuthenticated) { */
+      /*     props.checkAuthenticated(); */
+      /*   } */
+      /*   if (props.isAuthenticated) { */
+      /*     props.loadUser(); */
+      /*   } */
+      /* } */
     } catch (e) {}
   }, [location, props]);
 
