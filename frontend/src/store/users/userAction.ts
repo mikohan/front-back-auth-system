@@ -121,36 +121,34 @@ export const login = (email: string, password: string) => async (
   }
 };
 // Google user login
-export const googleLogin = (state: string, code: string) => async (
+export const googleLogin = (tokenId: string) => async (
   dispatch: ThunkDispatch<IState, void, IUserAction>
 ) => {
-  if (state && code && !localStorage.getItem('access')) {
+  if (tokenId && !localStorage.getItem('access')) {
+    const payload = {
+      auth_token: tokenId,
+    };
     const config = {
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
       },
     };
-    const details: { [key: string]: string } = {
-      state: state,
-      code: code,
-    };
-
-    const formBody = Object.keys(details)
-      .map(
-        (key) =>
-          encodeURIComponent(key) + '=' + encodeURIComponent(details[key])
-      )
-      .join('&');
-    console.log('IN', formBody);
-    const url = `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?${formBody}`;
+    const url = `http://localhost:8000/auth/social/google/`;
     try {
-      const res = await axios.post(url, config);
+      const res = await axios.post(url, payload);
       console.log(res);
-      dispatch({
+      // dispatch({
+      //   type: USER_GOOGLE_LOGIN_SUCCESS,
+      //   payload: res.data,
+      // });
+      // dispatch(loadUser() as any);
+      return {
         type: USER_GOOGLE_LOGIN_SUCCESS,
-        payload: res.data,
-      });
-      dispatch(loadUser() as any);
+        payload: {
+          access: res.data.tokens.access,
+          refresh: res.data.tokens.refresh,
+        },
+      };
     } catch (e) {
       dispatch({
         type: USER_GOOGLE_LOGIN_FAIL,

@@ -8,10 +8,10 @@ import {
   TextField,
   Button,
 } from '@material-ui/core';
-import { login } from '../store/users/userAction';
+import { googleLogin, login } from '../store/users/userAction';
 import { useSelector, useDispatch } from 'react-redux';
 import { IState } from '../intefaces';
-import axios from 'axios';
+import GoogleLogin from 'react-google-login';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -64,17 +64,16 @@ export default function Login(): ReactElement | null {
 
   async function onGoogle() {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_API_URL}/google`;
-      // const url = `${process.env.REACT_APP_API_URL}/auth/o/google-oauth2/?redirect_uri=${process.env.REACT_APP_SELF_URL}/google`;
-      const res = await axios.get(url);
-      console.log(res.data.authorization_url);
-      if (typeof window !== 'undefined') {
-        window.location.replace(res.data.authorization_url);
-      }
     } catch (e) {
       console.log('Continue with google fail', e);
     }
   }
+  const responseGoogle = (response: any) => {
+    console.log(response);
+    if (response) {
+      dispatch(googleLogin(response.tokenId));
+    }
+  };
 
   return (
     <Container maxWidth="lg">
@@ -127,6 +126,15 @@ export default function Login(): ReactElement | null {
             <Button variant="contained" color="secondary" onClick={onGoogle}>
               Continue with Google
             </Button>
+          </Grid>
+          <Grid>
+            <GoogleLogin
+              clientId="226244999524-h2prj07pns8q7n6hf4qe9ssc5qub3lcl.apps.googleusercontent.com"
+              buttonText="Login"
+              cookiePolicy={'single_host_origin'}
+              onSuccess={responseGoogle}
+              onFailure={responseGoogle}
+            />
           </Grid>
         </Grid>
       </Grid>
