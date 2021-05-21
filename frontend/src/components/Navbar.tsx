@@ -10,7 +10,8 @@ import { Link } from 'react-router-dom';
 import { logout } from '../store/users/userAction';
 import { useDispatch, useSelector } from 'react-redux';
 import { IState, IUser } from '../intefaces';
-import { Box } from '@material-ui/core';
+import { Box, Avatar } from '@material-ui/core';
+import { deepOrange, deepPurple } from '@material-ui/core/colors';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -26,6 +27,10 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     title: {
       flexGrow: 1,
+    },
+    orange: {
+      color: theme.palette.getContrastText(deepOrange[500]),
+      backgroundColor: deepOrange[500],
     },
   })
 );
@@ -57,6 +62,11 @@ export default function ButtonAppBar() {
   }
   const AuthLinks = ({ user }: IAuthLinksProps) => (
     <Fragment>
+      <Button>
+        <Avatar className={classes.orange} alt={user?.email}>
+          {user?.email.charAt(0).toUpperCase()}
+        </Avatar>
+      </Button>
       <Button color="inherit">{user?.email}</Button>
       <Button color="inherit" onClick={handleLogout}>
         Logout
