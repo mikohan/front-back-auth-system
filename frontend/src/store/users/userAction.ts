@@ -109,6 +109,7 @@ export const login = (email: string, password: string) => async (
   try {
     const res = await axios.post(url, body);
     const result = res.data.data;
+    console.log(result);
     dispatch({
       type: USER_LOGIN_SUCCESS,
       payload: result,

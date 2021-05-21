@@ -19,12 +19,38 @@ import {
   USER_GOOGLE_LOGIN_FAIL,
 } from './userActionTypes';
 import { IUserState } from '../../intefaces';
+import jwt from 'jsonwebtoken';
+import { IUser } from '../../intefaces/user';
+
+const dateNow = new Date();
+
+let token = localStorage.getItem('access') || null;
+let refresh = localStorage.getItem('refresh') || null;
+let isAuthenticated = false;
+if (refresh) {
+  const decodedRefresh = jwt.decode(refresh, { complete: true });
+  if (decodedRefresh?.exp < dateNow.getTime()) {
+    refresh = null;
+  }
+}
+if (token) {
+  const decoded = jwt.decode(token, { complete: true });
+
+  if (decoded?.exp < dateNow.getTime()) {
+    token = null;
+  } else {
+    isAuthenticated = true;
+  }
+}
+
+let user: IUser | null =
+  JSON.parse(localStorage.getItem('user') as string) || null;
 
 const initialState: IUserState = {
-  access: localStorage.getItem('access') || null,
-  refresh: localStorage.getItem('refresh') || null,
-  isAuthenticated: false,
-  user: null,
+  access: token,
+  refresh: refresh,
+  isAuthenticated: isAuthenticated,
+  user: user,
 };
 
 export const userReducer = (
@@ -51,6 +77,13 @@ export const userReducer = (
     case USER_LOGIN_SUCCESS:
       localStorage.setItem('access', action.payload?.tokens.access!);
       localStorage.setItem('refresh', action.payload?.tokens.refresh!);
+      localStorage.setItem(
+        'user',
+        JSON.stringify({
+          username: action.payload?.username,
+          email: action.payload?.email,
+        })
+      );
       return {
         ...state,
         isAuthenticated: true,
@@ -90,6 +123,7 @@ export const userReducer = (
     case USER_SIGN_UP_FAIL:
       localStorage.removeItem('access');
       localStorage.removeItem('refresh');
+      localStorage.removeItem('user');
       return {
         ...state,
         isAuthenticated: false,
